@@ -5,20 +5,23 @@
 import re
 import db_query
 
-def lookup_prof(vtext):
-    """Get professor names for the class being taught"""
+def lookup_prof_class(vtext):
     classname = re.sub(r'^.*teaching ', "", vtext)
     print('lookup_prof:', classname)
-    #db_query.who(classname)
-    db_query.search(classname, "LAST")
+    return(classname)
 
+def lookup_prof(classname):
+    """Get professor names for the class being taught"""
+    return(db_query.search(classname, "LAST"))
 
-def get_classnum(vtext):
-    """Get class number associated with the class"""
+def get_classnum_class(vtext):
     classname = re.sub(r'^.*course number for ', "", vtext)
     print('classnum:', classname)
-    #db_query.what(classname)
-    db_query.search(classname, "CODE")
+    return(classname)
+
+def get_classnum(classname):
+    """Get class number associated with the class"""
+    return(db_query.search(classname, "CODE"))
 
 def get_roomnum(vtext):
     """Get room number based on class"""

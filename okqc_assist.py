@@ -18,7 +18,6 @@
 import aiy.audio
 import aiy.cloudspeech
 import aiy.voicehat
-import re
 import parse_req
 
 def main():
@@ -45,9 +44,21 @@ def main():
         else:
             print('You said "', text, '"')
             if 'who' in text:
-                parse_req.lookup_prof(text)
+                classname = parse_req.lookup_prof_class(text)
+                results = parse_req.lookup_prof(classname)
+                aiy.audio.say(classname)
+                aiy.audio.say("is being taught by professor")
+                for name in results:
+                    aiy.audio.say(name)
+                    
             elif 'what' in text:
-                parse_req.get_classnum(text)
+                classname = parse_req.get_classnum_class(text)
+                results = parse_req.get_classnum(classname)
+                aiy.audio.say(classname)
+                aiy.audio.say("is being taught by professor")
+                for name in results:
+                    aiy.audio.say(name)
+                    
             elif 'where' in text:
                 parse_req.get_roomnum(text)
             elif 'when' in text:
