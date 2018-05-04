@@ -23,9 +23,13 @@ import parse_req
 
 def main():
     recognizer = aiy.cloudspeech.get_recognizer()
-    recognizer.expect_phrase('turn off the light')
-    recognizer.expect_phrase('turn on the light')
-    recognizer.expect_phrase('blink')
+    #recognizer.expect_phrase('turn off the light')
+    #recognizer.expect_phrase('turn on the light')
+    #recognizer.expect_phrase('blink')
+    recognizer.expect_phrase('who')
+    recognizer.expect_phrase('what')
+    recognizer.expect_phrase('where')
+    recognizer.expect_phrase('when')
 
     button = aiy.voicehat.get_button()
     led = aiy.voicehat.get_led()
@@ -40,7 +44,14 @@ def main():
             print('Sorry, I did not hear you.')
         else:
             print('You said "', text, '"')
-            parse_req.process_text(text)
+            if 'who' in text:
+                parse_req.lookup_prof(text)
+            elif 'what' in text:
+                parse_req.get_classnum(text)
+            elif 'where' in text:
+                parse_req.get_roomnum(text)
+            elif 'when' in text:
+                parse_req.get_daytime(text)
             
             #if 'turn on the light' in text:
             #    led.set_state(aiy.voicehat.LED.ON)
