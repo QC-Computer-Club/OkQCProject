@@ -19,8 +19,10 @@ import aiy.audio
 import aiy.cloudspeech
 import aiy.voicehat
 import parse_req
+import time
 
 def main():
+    aiy.i18n.set_language_code('en-US')
     recognizer = aiy.cloudspeech.get_recognizer()
     #recognizer.expect_phrase('turn off the light')
     #recognizer.expect_phrase('turn on the light')
@@ -46,18 +48,37 @@ def main():
             if 'who' in text:
                 classname = parse_req.lookup_prof_class(text)
                 results = parse_req.lookup_prof(classname)
-                aiy.audio.say(classname)
-                aiy.audio.say("is being taught by professor")
-                for name in results:
-                    aiy.audio.say(name)
+                try:
+                    message = 'is being taught by professor'
+                    print(classname, message)
+                    texttosay = classname + ' ' + message
+                    #print('I am here')
+                    
+                    for names in results:
+                        print(names[0])
+                        texttosay = texttosay + ' '  + names[0]
+                    aiy.audio.say(texttosay)
+                except:
+                    print("Something went horribly wrong.")
                     
             elif 'what' in text:
-                classname = parse_req.get_classnum_class(text)
-                results = parse_req.get_classnum(classname)
-                aiy.audio.say(classname)
-                aiy.audio.say("is being taught by professor")
-                for name in results:
-                    aiy.audio.say(name)
+                classnum = parse_req.get_classnum_class(text)
+                results = parse_req.get_classnum(classnum)
+                try:
+                    message = 'has a course number of'
+                    print(classnum, message)
+                    texttosay = classnum + ' ' + message
+                    print('I am here')
+                    
+                    for names in results:
+                        print(names[0])
+                        textresult = parse_req.remove_classsectnum(names[0])
+                        texttosay = texttosay + ' '  + textresult
+                        break
+                    aiy.audio.say(texttosay)
+                except:
+                    print("Something went horribly wrong.")
+
                     
             elif 'where' in text:
                 parse_req.get_roomnum(text)
@@ -70,8 +91,8 @@ def main():
             #    led.set_state(aiy.voicehat.LED.OFF)
             #elif 'blink' in text:
             #    led.set_state(aiy.voicehat.LED.BLINK)
-            #elif 'goodbye' in text:
-            #    break
+            elif 'end program' in text:
+                break
 
 if __name__ == '__main__':
     main()

@@ -111,6 +111,42 @@ def search(classname, query):
             result_list = sheet.row_values(rowx = r_index + 1,
                                    start_colx = c_index,
                                    end_colx = c_index + 1)
+    # Created List of all Classes 
+    col_data = sheet.col_values(colx = 5,
+                                start_rowx = 1,
+                                end_rowx = 217)
+
+    # Convert List to Title Case
+    col_data = convert(col_data)
+
+    # Attempt to find Class name in list
+    try :
+        col_data.index(subject)
+    except ValueError:
+        print("Class Not Found")
+        sys.exit(0)
+
+    # Attempt to find data associated with class
+    try :
+        c_index = col_list.index(predicate)
+    except ValueError:
+        print("Data Not Found")
+        sys.exit(0)
+
+    # Print all data out based on user entry
+    """(col_data must be enumerated so it can be looped through)"""
+    
+    result_tuple_list = []
+    
+    for r_index, result in enumerate(col_data) :
+        if result == subject :
+            """Indicies are off by one because, in Python,
+                ranges are non-inclusive on the high end,
+                thus requiring a +1"""
+            result_list = sheet.row_values(rowx = r_index + 1,
+                                   start_colx = c_index,
+                                   end_colx = c_index + 1)
+
             # Convert to Title Case
             result_list = convert(result_list)
             print("result_list:",result_list)
@@ -121,7 +157,12 @@ def search(classname, query):
             result_tuple = tuple(result_set)
             print("result_tuple:",result_tuple)
             
-            return result_tuple
+            result_tuple_list.append(result_tuple)
+            
+    for num_index, result in enumerate(result_tuple_list):
+        print("result_tuple_list:", result)
+    
+    return result_tuple_list
 
 
 if __name__ == '__main__':

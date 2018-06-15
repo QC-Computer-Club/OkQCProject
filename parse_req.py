@@ -11,7 +11,7 @@ def lookup_prof_class(vtext):
     return(classname)
 
 def lookup_prof(classname):
-    """Get professor names for the class being taught"""
+    """Get professor names for the class being taught"""    
     return(db_query.search(classname, "LAST"))
 
 def get_classnum_class(vtext):
@@ -22,6 +22,12 @@ def get_classnum_class(vtext):
 def get_classnum(classname):
     """Get class number associated with the class"""
     return(db_query.search(classname, "CODE"))
+
+def remove_classsectnum(classnum):
+    """Removes class number associated with the class"""
+    classnumresult = re.compile("[A-Z][a-z][a-z] [0-9][0-9][0-9]")
+    classnumresult.search(classnum)
+    return(classnumresult.group(0))
 
 def get_roomnum(vtext):
     """Get room number based on class"""
