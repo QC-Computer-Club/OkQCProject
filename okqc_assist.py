@@ -56,7 +56,7 @@ def main():
                     
                     for names in results:
                         print(names[0])
-                        texttosay = texttosay + ' '  + names[0]
+                        texttosay = texttosay + ' ' + names[0]
                     aiy.audio.say(texttosay)
                 except:
                     print("Something went horribly wrong.")
@@ -68,12 +68,17 @@ def main():
                     message = 'has a course number of'
                     print(classnum, message)
                     texttosay = classnum + ' ' + message
-                    print('I am here')
+                    #print('I am here')
                     
                     for names in results:
                         print(names[0])
                         textresult = parse_req.remove_classsectnum(names[0])
-                        texttosay = texttosay + ' '  + textresult
+                        print(textresult)
+                        #texttosay = texttosay + ' ' + textresult
+                        #trying to add spaces in the letters and numbers
+                        #so course letters like BUS would not be said literally
+                        for letter in textresult:
+                            texttosay = texttosay + letter + ' '
                         break
                     aiy.audio.say(texttosay)
                 except:
@@ -81,7 +86,21 @@ def main():
 
                     
             elif 'where' in text:
-                parse_req.get_roomnum(text)
+                classname = parse_req.get_roomnum_class(text)
+                results = parse_req.get_roomnum(classname)
+                try:
+                    message = ' is being held in room'
+                    print(classname, message)
+                    texttosay = classname + ' ' + message
+                    print('I am here')
+                    
+                    for names in results:
+                        print(names[0])
+                        roomnum_text = parse_req.fix_roomnumtext(names[0])
+                        texttosay = texttosay + ' ' + roomnum_text
+                    aiy.audio.say(texttosay)
+                except:
+                    print("Something went horribly wrong.")                
             elif 'when' in text:
                 parse_req.get_daytime(text)
             

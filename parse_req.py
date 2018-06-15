@@ -25,15 +25,43 @@ def get_classnum(classname):
 
 def remove_classsectnum(classnum):
     """Removes class number associated with the class"""
-    classnumresult = re.compile("[A-Z][a-z][a-z] [0-9][0-9][0-9]")
-    classnumresult.search(classnum)
-    return(classnumresult.group(0))
+    #classnum = classnum.upper()
+    classnumresult = re.match(r"([A-Z][A-Z][A-Z])\s([0-9][0-9][0-9])\s([F0-9][0-9])", classnum.upper())
+    return(classnumresult.group(1) + ' ' + classnumresult.group(2))
 
-def get_roomnum(vtext):
+def get_roomnum_class(vtext):
+    """Get class name before getting room number"""
+    classname_result = re.match(r'Where is (.*) section ([F0-9][0-9]) being taught?', vtext)
+    return(classnumresult.group(1))
+
+def get_roomnum(classname):
     """Get room number based on class"""
-    classname = re.sub(r'^.*teaching ', "", vtext)
-    print('roomnum:', classname)
-    db_query.search(classname, "ROOM")
+    #classname_result = re.match(r'Where is (.*) section ([F0-9][0-9]) being taught?', classname)
+    print('roomnum:')    
+    return(db_query.search(classname, "ROOM"))
+
+def fix_roomnumtext(roomnum):
+    """Fix room number for text-to-voice converter"""
+    PPlace = 'PP'
+    PPlaceVal = "President\'s Place"
+    Sav = 'S'
+    SavVal = 'Saville Hall'
+    newroomnum = ''
+    for somechar in roomnum
+        if somechar.isdigit():
+            newroomnum = newroomnum + somechar + ' '
+        else:
+            newroomnum = newroomnum + somechar
+            
+    if 'PP' in roomnum:
+        #roomnumresult = re.match(r"[P][P][0-9][0-9][0-9]", roomnum)
+        newroomnum = re.sub(PPlace, PPlaceVal, roomnum)
+        return(newroomnum)
+    elif 'S' in roomnum:
+        newroomnum = re.sub(Sav, SavVal, roomnum)
+        return(newroomnum)
+    else:
+        print("Not a valid room")
 
 def get_daytime(text):
     """Get days and times based on class"""
