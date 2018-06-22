@@ -12,7 +12,7 @@ sheet = book.sheet_by_index(0)
 # Assign Column Titles to a List
 col_list = sheet.row_values(rowx = 0,
                             start_colx = 0,
-                            end_colx = 13)
+                            end_colx = 14)
 
 # Method for Title Case Conversion
 def convert(listToConvert):

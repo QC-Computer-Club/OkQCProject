@@ -57,6 +57,7 @@ def main():
                     for names in results:
                         print(names[0])
                         texttosay = texttosay + ' ' + names[0]
+                    #print(texttosay)
                     aiy.audio.say(texttosay)
                 except:
                     print("Something went horribly wrong.")
@@ -80,6 +81,7 @@ def main():
                         for letter in textresult:
                             texttosay = texttosay + letter + ' '
                         break
+                    #print(texttosay)
                     aiy.audio.say(texttosay)
                 except:
                     print("Something went horribly wrong.")
@@ -89,7 +91,7 @@ def main():
                 classname = parse_req.get_roomnum_class(text)
                 results = parse_req.get_roomnum(classname)
                 try:
-                    message = ' is being held in room'
+                    message = 'is being held in'
                     print(classname, message)
                     texttosay = classname + ' ' + message
                     print('I am here')
@@ -98,6 +100,7 @@ def main():
                         print(names[0])
                         roomnum_text = parse_req.fix_roomnumtext(names[0])
                         texttosay = texttosay + ' ' + roomnum_text
+                    print(texttosay)
                     aiy.audio.say(texttosay)
                 except:
                     print("Something went horribly wrong.")                

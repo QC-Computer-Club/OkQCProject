@@ -31,8 +31,11 @@ def remove_classsectnum(classnum):
 
 def get_roomnum_class(vtext):
     """Get class name before getting room number"""
-    classname_result = re.match(r'Where is (.*) section ([F0-9][0-9]) being taught?', vtext)
-    return(classnumresult.group(1))
+    #classname_result = re.match(r'Where is (.*) section ([F0-9][0-9]) being taught?', vtext)
+    classname_result = re.match(r'where is (.*) being', vtext)
+    #print(classname_result.group(1))
+    
+    return(classname_result.group(1))
 
 def get_roomnum(classname):
     """Get room number based on class"""
@@ -42,23 +45,23 @@ def get_roomnum(classname):
 
 def fix_roomnumtext(roomnum):
     """Fix room number for text-to-voice converter"""
-    PPlace = 'PP'
+    PPlace = 'Pp'
     PPlaceVal = "President\'s Place"
     Sav = 'S'
     SavVal = 'Saville Hall'
     newroomnum = ''
-    for somechar in roomnum
+    for somechar in roomnum:
         if somechar.isdigit():
-            newroomnum = newroomnum + somechar + ' '
+            newroomnum = newroomnum + ' ' + somechar
         else:
             newroomnum = newroomnum + somechar
             
-    if 'PP' in roomnum:
+    if PPlace in roomnum:
         #roomnumresult = re.match(r"[P][P][0-9][0-9][0-9]", roomnum)
-        newroomnum = re.sub(PPlace, PPlaceVal, roomnum)
+        newroomnum = re.sub(PPlace, PPlaceVal, newroomnum)
         return(newroomnum)
-    elif 'S' in roomnum:
-        newroomnum = re.sub(Sav, SavVal, roomnum)
+    elif Sav in roomnum:
+        newroomnum = re.sub(Sav, SavVal, newroomnum)
         return(newroomnum)
     else:
         print("Not a valid room")
