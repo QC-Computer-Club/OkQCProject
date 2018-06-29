@@ -6,45 +6,63 @@ import re
 import db_query
 
 def lookup_prof_class(vtext):
-    classname = re.sub(r'^.*teaching ', "", vtext)
-    print('lookup_prof:', classname)
-    return(classname)
+    #classname = re.sub(r'^.*teaching ', "", vtext)
+    classnameresult = re.match('who is teaching (.*)', vtext)
+    print('lookup_prof_class:', classnameresult.group(1))
+    #return(classname)
+    return(classnameresult.group(1))
 
 def lookup_prof(classname):
-    """Get professor names for the class being taught"""    
+    """Get professor names for the class being taught"""
+    print('lookup_prof:')
     return(db_query.search(classname, "LAST"))
 
 def get_classnum_class(vtext):
-    classname = re.sub(r'^.*course number for ', "", vtext)
-    print('classnum:', classname)
-    return(classname)
+    #classname = re.sub(r'^.*course number for ', "", vtext)
+    classnameresult = re.match('(.*) course number for (.*)', vtext)
+    print('get_classnum_class:', classnameresult.group(2))
+    #return(classname)
+    return(classnameresult.group(2))
+
+def get_classnuminfo(classinfo, numresult):
+    """Get class info"""
+    #classes are always in this format CSI 116 01
+    # 1 -> course type designation ex: CSI
+    # 2 -> course number ex: 116
+    # 3 -> section number ex: 01
+    classnumresult = re.match(r"([A-Z][A-Z][A-Z])  ([0-9][0-9][0-9])  ([F0-9][0-9])", classinfo.upper())
+    print('get_classnuminfo:', classnumresult.group(numresult))
+    return(classnumresult.group(numresult))
 
 def get_classnum(classname):
     """Get class number associated with the class"""
+    print('get_classnum:')
     return(db_query.search(classname, "CODE"))
 
 def remove_classsectnum(classnum):
     """Removes class number associated with the class"""
-    #classnum = classnum.upper()
-    classnumresult = re.match(r"([A-Z][A-Z][A-Z])\s([0-9][0-9][0-9])\s([F0-9][0-9])", classnum.upper())
-    return(classnumresult.group(1) + ' ' + classnumresult.group(2))
+    #classnumresult = re.match(r"([A-Z][A-Z][A-Z])  ([0-9][0-9][0-9])  ([F0-9][0-9])", classnum.upper())
+    #return(classnumresult.group(1) + ' ' + classnumresult.group(2))
+    print('remove_classsectnum:', get_classnuminfo(classnum, 1), get_classnuminfo(classnum, 2))
+    return(get_classnuminfo(classnum, 1) + ' ' + get_classnuminfo(classnum, 2))
 
 def get_roomnum_class(vtext):
     """Get class name before getting room number"""
     #classname_result = re.match(r'Where is (.*) section ([F0-9][0-9]) being taught?', vtext)
     classname_result = re.match(r'where is (.*) being', vtext)
     #print(classname_result.group(1))
-    
+    print('get_roomnumclass:', classname_result.group(1))
     return(classname_result.group(1))
 
 def get_roomnum(classname):
     """Get room number based on class"""
     #classname_result = re.match(r'Where is (.*) section ([F0-9][0-9]) being taught?', classname)
-    print('roomnum:')    
+    print('get_roomnum:')    
     return(db_query.search(classname, "ROOM"))
 
 def fix_roomnumtext(roomnum):
     """Fix room number for text-to-voice converter"""
+    print('fix_roomnumtext:')
     PPlace = 'Pp'
     PPlaceVal = "President\'s Place"
     Sav = 'S'
@@ -67,11 +85,12 @@ def fix_roomnumtext(roomnum):
         print("Not a valid room")
 
 def get_daytime(text):
+    print('get_daytime:')
     """Get days and times based on class"""
     classname = re.sub(r'^.*teaching ', "", vtext)
     print('daytime:', classname)
     #may want a customized function for obvious reasons
     #db_query.daytime(classname)
-    db_query.search(classname, "DAY")
-    db_query.search(classname, "BEG2")
-    db_query.search(classname, "ND3")
+    #db_query.search(classname, "DAY")
+    #db_query.search(classname, "BEG2")
+    #db_query.search(classname, "ND3")

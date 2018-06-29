@@ -68,7 +68,7 @@ def main():
                 try:
                     message = 'has a course number of'
                     print(classnum, message)
-                    texttosay = classnum + ' ' + message
+                    texttosay = classnum + ' ' + message + ' '
                     #print('I am here')
                     
                     for names in results:
@@ -80,6 +80,7 @@ def main():
                         #so course letters like BUS would not be said literally
                         for letter in textresult:
                             texttosay = texttosay + letter + ' '
+                        print(texttosay)
                         break
                     #print(texttosay)
                     aiy.audio.say(texttosay)
@@ -105,7 +106,7 @@ def main():
                 except:
                     print("Something went horribly wrong.")                
             elif 'when' in text:
-                parse_req.get_daytime(text)
+                classname = parse_req.get_daytime(text)
             
             #if 'turn on the light' in text:
             #    led.set_state(aiy.voicehat.LED.ON)

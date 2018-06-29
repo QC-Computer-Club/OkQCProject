@@ -1,12 +1,14 @@
 # Paul DeRubeis
 # 5/4/2018
 # Database Query Module
+# modified by Simon Yip
 
 import sys
 import xlrd
 
 # Initialize Spreadsheet data
-book = xlrd.open_workbook('Prof Progs Schedule Fall2016.xlsx')
+database = 'Prof Progs Schedule Fall2016.xlsx'
+book = xlrd.open_workbook(database)
 sheet = book.sheet_by_index(0)
 
 # Assign Column Titles to a List
@@ -44,14 +46,14 @@ def main():
         col_data.index(subject)
     except ValueError:
         print("Class Not Found")
-        sys.exit(0)
+        #sys.exit(0)
 
     # Attempt to find data associated with class
     try :
         c_index = col_list.index(predicate)
     except ValueError:
         print("Data Not Found")
-        sys.exit(0)
+        #sys.exit(0)
 
     # Print all data out based on user entry
     """(col_data must be enumerated so it can be looped through)"""
@@ -92,13 +94,13 @@ def search(classname, query):
         col_data.index(subject)
     except ValueError:
         print("Class Not Found")
-        sys.exit(0)
+        #sys.exit(0)
 
     try :
         c_index = col_list.index(predicate)
     except ValueError:
         print("Data Not Found")
-        sys.exit(0)
+        #sys.exit(0)
 
     # Print all data out based on user entry
     """(col_data must be enumerated so it can be looped through)"""
@@ -124,14 +126,14 @@ def search(classname, query):
         col_data.index(subject)
     except ValueError:
         print("Class Not Found")
-        sys.exit(0)
+        #sys.exit(0)
 
     # Attempt to find data associated with class
     try :
         c_index = col_list.index(predicate)
     except ValueError:
         print("Data Not Found")
-        sys.exit(0)
+        #sys.exit(0)
 
     # Print all data out based on user entry
     """(col_data must be enumerated so it can be looped through)"""
