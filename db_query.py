@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Paul DeRubeis
 # 5/4/2018
 # Database Query Module
