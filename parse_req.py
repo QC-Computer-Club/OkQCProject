@@ -95,31 +95,48 @@ def get_roomnum(classname):
     return(db_query.search(classname, "ROOM"))
 
 def fix_roomnumtext(roomnum):
-    """Fix room number for text-to-voice converter"""
+    """
+    Fix room number for text-to-voice converter
+    Pre: Assumes valid course num
+    Post: Returns complete room info (text replacement)
+    """
+    
+    upperroomnum = roomnum.upper()
     print('fix_roomnumtext:')
-    PPlace = 'Pp'
+    PPlace = 'PP'
     PPlaceVal = "President\'s Place"
     Sav = 'S'
     SavVal = 'Saville Hall'
     newroomnum = ''
-    for somechar in roomnum:
+    for somechar in upperroomnum:
         if somechar.isdigit():
             newroomnum = newroomnum + ' ' + somechar
         else:
             newroomnum = newroomnum + somechar
             
-    if PPlace in roomnum:
+    if PPlace in upperroomnum:
         #roomnumresult = re.match(r"[P][P][0-9][0-9][0-9]", roomnum)
         newroomnum = re.sub(PPlace, PPlaceVal, newroomnum)
         return(newroomnum)
-    elif Sav in roomnum:
+    elif Sav in upperroomnum:
         newroomnum = re.sub(Sav, SavVal, newroomnum)
         return(newroomnum)
     else:
         print("Not a valid room")
 
+def get_daytime_class(vtext):
+    """
+    Get class name before getting day+time of class
+    Pre: Assumes good voice text input
+    Post: Returns classname
+    """
+
 def get_daytime(vtext):
-    """Get days and times based on class"""
+    """
+    Get days and times based on class
+    Pre: Assumes valid classname
+    Post: Returns list of tuples containing class day and times
+    """
     print('get_daytime:')
     classname = re.match(r'when is (.*) being run', vtext)
     print('daytime:', classname)
