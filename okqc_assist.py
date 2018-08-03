@@ -87,7 +87,6 @@ def main():
                 except:
                     print("Something went horribly wrong.")
 
-                    
             elif 'where' in text:
                 classname = parse_req.get_roomnum_class(text)
                 results = parse_req.get_roomnum(classname)
@@ -95,7 +94,7 @@ def main():
                     message = 'is being held in'
                     print(classname, message)
                     texttosay = classname + ' ' + message
-                    print('I am here')
+                    #print('I am here')
                     
                     for names in results:
                         print(names[0])
@@ -104,10 +103,26 @@ def main():
                     print(texttosay)
                     aiy.audio.say(texttosay)
                 except:
-                    print("Something went horribly wrong.")                
+                    print("Something went horribly wrong.")
+
             elif 'when' in text:
-                classname = parse_req.get_daytime(text)
-            
+                classname = parse_req.get_daytime_class(text)
+                results = parse_req.get_daytime(classname)
+                try:
+                    message = 'is being held in'
+                    print(classname, message)
+                    texttosay = classname + ' ' + message
+                    #print('I am here')
+                    
+                    for names in results:
+                        print(names[0])
+                        roomnum_text = parse_req.fix_roomnumtext(names[0])
+                        texttosay = texttosay + ' ' + roomnum_text
+                    print(texttosay)
+                    aiy.audio.say(texttosay)
+                except:
+                    print("Something went horribly wrong.")
+
             #if 'turn on the light' in text:
             #    led.set_state(aiy.voicehat.LED.ON)
             #elif 'turn off the light' in text:

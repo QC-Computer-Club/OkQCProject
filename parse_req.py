@@ -14,7 +14,6 @@ def lookup_prof_class(vtext):
     #classname = re.sub(r'^.*teaching ', "", vtext)
     classnameresult = re.match('who is teaching (.*)', vtext)
     print('lookup_prof_class:', classnameresult.group(1))
-    #return(classname)
     return(classnameresult.group(1))
 
 def lookup_prof(classname):
@@ -100,7 +99,6 @@ def fix_roomnumtext(roomnum):
     Pre: Assumes valid course num
     Post: Returns complete room info (text replacement)
     """
-    
     upperroomnum = roomnum.upper()
     print('fix_roomnumtext:')
     PPlace = 'PP'
@@ -124,12 +122,19 @@ def fix_roomnumtext(roomnum):
     else:
         print("Not a valid room")
 
+#def change_time(atime)
+
+#def change_day(aday)
+
 def get_daytime_class(vtext):
     """
     Get class name before getting day+time of class
     Pre: Assumes good voice text input
     Post: Returns classname
     """
+    classnameresult = re.match(r'when is (.*) being run', vtext)
+    print('get_daytime_class:', classnameresult.group(1))
+    return(classnameresult.group(1))
 
 def get_daytime(vtext):
     """
@@ -138,10 +143,16 @@ def get_daytime(vtext):
     Post: Returns list of tuples containing class day and times
     """
     print('get_daytime:')
-    classname = re.match(r'when is (.*) being run', vtext)
-    print('daytime:', classname)
-    #may want a customized function for obvious reasons
-    #db_query.daytime(classname)
-    #db_query.search(classname, "DAY")
-    #db_query.search(classname, "BEG2")
-    #db_query.search(classname, "ND3")
+#may want a customized function for obvious reasons
+    dayofweek_tuple = db_query.search(classname, "DAY")
+    begintime_tuple = db_query.search(classname, "BEG2")
+    endtime_tuple = db_query.search(classname, "ND3")
+    total_len = len(dayofweek_tuple)
+    
+    daytime_tuple = ()
+    
+    for x in range(total_len):
+        new_daytime_tuple = (dayofweek_tuple[x], begintime_tuple[x], endtime_tuple[x])
+        daytime_tuple.append(new_daytime_tuple)
+
+    return(daytime_tuple)

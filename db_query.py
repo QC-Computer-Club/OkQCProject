@@ -152,13 +152,13 @@ def search(classname, query):
 
             # Convert to Title Case
             result_list = convert(result_list)
-            print("result_list:",result_list)
+            print("result_list:", result_list)
             # Convert to a Set
             result_set = set(result_list)
-            print("result_set:",result_set)
+            print("result_set:", result_set)
             # Convert List to Tuple
             result_tuple = tuple(result_set)
-            print("result_tuple:",result_tuple)
+            print("result_tuple:", result_tuple)
             
             result_tuple_list.append(result_tuple)
             
