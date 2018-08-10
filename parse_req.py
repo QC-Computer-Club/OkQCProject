@@ -122,9 +122,60 @@ def fix_roomnumtext(roomnum):
     else:
         print("Not a valid room")
 
-#def change_time(atime)
+def report_time(atime)
+    """
+    Converts internal time convention (on the Excel Spreadsheet) into AM/PM
+    Pre: Assumes data is from spreadsheet in military time format HH:MM
+    Post: Returns time in "verbally useful" format - ex: 9 25 AM
+    """
+    reached_colon = false
+    hour_digit = ''
+    minute_digit = ''
+    ampm = ''
+    for curdigit in atime:
+        if (curdigit == ':')
+            reached_colon = true
+        elif (reached_colon)
+            minute_digit = minute_digit + curdigit
+        else
+            hour_digit = hour_digit + curdigit
+    hour_digit = int(hour_digit)
+    minute_digit = int(minute_digit)
+    if (hour_digit >= 12)
+        ampm = 'PM'
+        if (hour_digit != 12)
+            hour_digit = hour_digit - 12
+    else
+        ampm = 'AM'
+        if (hour_digit == 0)
+            hour_digit = hour_digit + 12
+    return(hour_digit + ' ' + minute_digit + ' ' + ampm)
 
-#def change_day(aday)
+def report_days(aday)
+    """
+    Converts internal day convention into actual days of week
+    Pre: Assumes data is from spreadsheet based on QC abbreviated day format
+    MTWRFSU = Monday, Tuesday, Wednesday, Thursday, Friday,
+    Saturday, Sunday (respectively)
+    Post: Returns appropriate days based on listed letters
+    """
+    daysofweek = ""
+    for curday in aday:
+        if (curday == 'M')
+            daysofweek = daysofweek + "Monday" + " "
+        elif (curday == 'T')
+            daysofweek = daysofweek + "Tuesday" + " "
+        elif (curday == 'W')
+            daysofweek = daysofweek + "Wednesday + " "
+        elif (curday == 'R')
+            daysofweek = daysofweek + "Thursday" + " "
+        elif (curday == 'F')
+            daysofweek = daysofweek + "Friday" + " "
+        elif (curday == 'S')
+            daysofweek = daysofweek + "Saturday" + " "
+        elif (curday == 'U')
+            daysofweek = daysofweek + "Sunday" + " "
+    return(daysofweek)
 
 def get_daytime_class(vtext):
     """
@@ -144,6 +195,7 @@ def get_daytime(vtext):
     """
     print('get_daytime:')
 #may want a customized function for obvious reasons
+    section_tuple = db_query.search(classname, "CODE")
     dayofweek_tuple = db_query.search(classname, "DAY")
     begintime_tuple = db_query.search(classname, "BEG2")
     endtime_tuple = db_query.search(classname, "ND3")
@@ -152,7 +204,7 @@ def get_daytime(vtext):
     daytime_tuple = ()
     
     for x in range(total_len):
-        new_daytime_tuple = (dayofweek_tuple[x], begintime_tuple[x], endtime_tuple[x])
+        new_daytime_tuple = (section_tuple[x], report_days(dayofweek_tuple[x]), report_time(begintime_tuple[x]), report_time(endtime_tuple[x]))
         daytime_tuple.append(new_daytime_tuple)
 
     return(daytime_tuple)
