@@ -109,15 +109,16 @@ def main():
                 classname = parse_req.get_daytime_class(text)
                 results = parse_req.get_daytime(classname)
                 try:
-                    message = 'is being held in'
+                    message = 'is being run in'
                     print(classname, message)
                     texttosay = classname + ' ' + message
                     #print('I am here')
                     
-                    for names in results:
-                        print(names[0])
-                        roomnum_text = parse_req.fix_roomnumtext(names[0])
-                        texttosay = texttosay + ' ' + roomnum_text
+                    for section_tuples in results:
+                        #combined_info = section_tuples[0] + ' ' + section_tuples[1] + ' ' + section_tuples[2] + ' ' + section_tuples[3] + ' '
+                        combined_info = section_tuples + ' '
+                        print(combined_info)
+                        texttosay = texttosay + combined_info
                     print(texttosay)
                     aiy.audio.say(texttosay)
                 except:

@@ -122,7 +122,7 @@ def fix_roomnumtext(roomnum):
     else:
         print("Not a valid room")
 
-def report_time(atime)
+def report_time(atime):
     """
     Converts internal time convention (on the Excel Spreadsheet) into AM/PM
     Pre: Assumes data is from spreadsheet in military time format HH:MM
@@ -133,25 +133,25 @@ def report_time(atime)
     minute_digit = ''
     ampm = ''
     for curdigit in atime:
-        if (curdigit == ':')
+        if (curdigit == ':'):
             reached_colon = true
-        elif (reached_colon)
+        elif (reached_colon):
             minute_digit = minute_digit + curdigit
-        else
+        else:
             hour_digit = hour_digit + curdigit
     hour_digit = int(hour_digit)
     minute_digit = int(minute_digit)
-    if (hour_digit >= 12)
+    if (hour_digit >= 12):
         ampm = 'PM'
-        if (hour_digit != 12)
+        if (hour_digit != 12):
             hour_digit = hour_digit - 12
-    else
+    else:
         ampm = 'AM'
-        if (hour_digit == 0)
+        if (hour_digit == 0):
             hour_digit = hour_digit + 12
     return(hour_digit + ' ' + minute_digit + ' ' + ampm)
 
-def report_days(aday)
+def report_days(aday):
     """
     Converts internal day convention into actual days of week
     Pre: Assumes data is from spreadsheet based on QC abbreviated day format
@@ -159,23 +159,55 @@ def report_days(aday)
     Saturday, Sunday (respectively)
     Post: Returns appropriate days based on listed letters
     """
-    daysofweek = ""
+    daysofweek = ''
     for curday in aday:
-        if (curday == 'M')
-            daysofweek = daysofweek + "Monday" + " "
-        elif (curday == 'T')
-            daysofweek = daysofweek + "Tuesday" + " "
-        elif (curday == 'W')
-            daysofweek = daysofweek + "Wednesday + " "
-        elif (curday == 'R')
-            daysofweek = daysofweek + "Thursday" + " "
-        elif (curday == 'F')
-            daysofweek = daysofweek + "Friday" + " "
-        elif (curday == 'S')
-            daysofweek = daysofweek + "Saturday" + " "
-        elif (curday == 'U')
-            daysofweek = daysofweek + "Sunday" + " "
+        if (curday == 'M'):
+            daysofweek = daysofweek + "Monday" + ' '
+        elif (curday == 'T'):
+            daysofweek = daysofweek + "Tuesday" + ' '
+        elif (curday == 'W'):
+            daysofweek = daysofweek + "Wednesday" + ' '
+        elif (curday == 'R'):
+            daysofweek = daysofweek + "Thursday" + ' '
+        elif (curday == 'F'):
+            daysofweek = daysofweek + "Friday" + ' '
+        elif (curday == 'S'):
+            daysofweek = daysofweek + "Saturday" + ' '
+        elif (curday == 'U'):
+            daysofweek = daysofweek + "Sunday" + ' '
     return(daysofweek)
+
+def strip_section(asection):
+    """
+    Get section numbers from course
+    Pre: Assumes data is class info (section is embedded)
+    expected format: CSI  116  01
+    Post: Returns strictly section number
+    """
+    print(asection)
+    print(len(asection))
+    print(asection[8:])
+    return(asection[10:])
+
+def report_section(asection):
+    """
+    Report usable data from section number
+    Pre: Assumes data is stripped out from class info
+    expected variations: 01, F1, F1 S, F5 3, F7 2
+    Post: Returns verbal friendly information
+    """
+    section_text = ''
+    print(asection)
+    if "F" in asection:
+        if (asection[1] == '1'):
+            section_text = "Section " + asection + " 10 Week Class"
+        elif (asection[1] == '5'):
+            section_text = "Section " + asection + " 5 Week Class"
+        elif (asection[1] == '7'):
+            section_text = "Section " + asection + " 7 Week Class"
+    else:
+        section_text = "Section " + asection[0] + ' ' + asection[1]
+    return(section_text)
 
 def get_daytime_class(vtext):
     """
@@ -187,7 +219,7 @@ def get_daytime_class(vtext):
     print('get_daytime_class:', classnameresult.group(1))
     return(classnameresult.group(1))
 
-def get_daytime(vtext):
+def get_daytime(classname):
     """
     Get days and times based on class
     Pre: Assumes valid classname
@@ -204,7 +236,7 @@ def get_daytime(vtext):
     daytime_tuple = ()
     
     for x in range(total_len):
-        new_daytime_tuple = (section_tuple[x], report_days(dayofweek_tuple[x]), report_time(begintime_tuple[x]), report_time(endtime_tuple[x]))
+        new_daytime_tuple = (report_section(strip_section(section_tuple[x])), report_days(dayofweek_tuple[x]), report_time(begintime_tuple[x]), report_time(endtime_tuple[x]))
         daytime_tuple.append(new_daytime_tuple)
 
     return(daytime_tuple)
