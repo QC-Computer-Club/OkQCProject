@@ -128,19 +128,26 @@ def report_time(atime):
     Pre: Assumes data is from spreadsheet in military time format HH:MM
     Post: Returns time in "verbally useful" format - ex: 9 25 AM
     """
-    reached_colon = false
+    reached_colon = False
     hour_digit = ''
     minute_digit = ''
     ampm = ''
-    for curdigit in atime:
-        if (curdigit == ':'):
-            reached_colon = true
-        elif (reached_colon):
-            minute_digit = minute_digit + curdigit
-        else:
-            hour_digit = hour_digit + curdigit
+    cur_time = ''
+    for cur_string in atime:
+        cur_time = cur_string
+        
+    #for curdigit in atime:
+        #print(curdigit)
+        #if (curdigit == ':'):
+            #reached_colon = True
+        #elif (reached_colon == True):
+            #minute_digit = minute_digit + curdigit
+        #else:
+            #hour_digit = hour_digit + curdigit
+    hour_digit = cur_time[0:2]
+    minute_digit = cur_time[3:5]
     hour_digit = int(hour_digit)
-    minute_digit = int(minute_digit)
+    #minute_digit = int(minute_digit)
     if (hour_digit >= 12):
         ampm = 'PM'
         if (hour_digit != 12):
@@ -149,7 +156,7 @@ def report_time(atime):
         ampm = 'AM'
         if (hour_digit == 0):
             hour_digit = hour_digit + 12
-    return(hour_digit + ' ' + minute_digit + ' ' + ampm)
+    return(str(hour_digit) + ' ' + minute_digit + ' ' + ampm)
 
 def report_days(aday):
     """
@@ -186,8 +193,10 @@ def strip_section(asection):
     """
     print(asection)
     print(len(asection))
-    print(asection[8:])
-    return(asection[10:])
+    for data in asection:
+        print(data[10:])
+        return(asection[10:])
+    #return(asection[10:])
 
 def report_section(asection):
     """
@@ -198,7 +207,7 @@ def report_section(asection):
     """
     section_text = ''
     print(asection)
-    if "F" in asection:
+    if 'F' in asection:
         if (asection[1] == '1'):
             section_text = "Section " + asection + " 10 Week Class"
         elif (asection[1] == '5'):
@@ -206,7 +215,13 @@ def report_section(asection):
         elif (asection[1] == '7'):
             section_text = "Section " + asection + " 7 Week Class"
     else:
-        section_text = "Section " + asection[0] + ' ' + asection[1]
+        section_text = "Section"
+        count = 0
+        for some_section in asection:
+            section_text = section_text + ' ' + some_section
+            count = count + 1
+            if count == 2:
+                break
     return(section_text)
 
 def get_daytime_class(vtext):
