@@ -166,22 +166,22 @@ def report_days(aday):
     Saturday, Sunday (respectively)
     Post: Returns appropriate days based on listed letters
     """
+    aday = aday.Upper()
     daysofweek = ''
-    for curday in aday:
-        if (curday == 'M'):
-            daysofweek = daysofweek + "Monday" + ' '
-        elif (curday == 'T'):
-            daysofweek = daysofweek + "Tuesday" + ' '
-        elif (curday == 'W'):
-            daysofweek = daysofweek + "Wednesday" + ' '
-        elif (curday == 'R'):
-            daysofweek = daysofweek + "Thursday" + ' '
-        elif (curday == 'F'):
-            daysofweek = daysofweek + "Friday" + ' '
-        elif (curday == 'S'):
-            daysofweek = daysofweek + "Saturday" + ' '
-        elif (curday == 'U'):
-            daysofweek = daysofweek + "Sunday" + ' '
+    if 'M' in aday:
+        daysofweek = daysofweek + "Monday" + ' '
+    elif 'T'in aday:
+        daysofweek = daysofweek + "Tuesday" + ' '
+    elif 'W'in aday:
+        daysofweek = daysofweek + "Wednesday" + ' '
+    elif 'R' in aday:
+        daysofweek = daysofweek + "Thursday" + ' '
+    elif 'F' in aday:
+        daysofweek = daysofweek + "Friday" + ' '
+    elif 'S' in aday:
+        daysofweek = daysofweek + "Saturday" + ' '
+    elif 'U' in aday:
+        daysofweek = daysofweek + "Sunday" + ' '
     return(daysofweek)
 
 def strip_section(asection):
@@ -191,7 +191,7 @@ def strip_section(asection):
     expected format: CSI  116  01
     Post: Returns strictly section number
     """
-    print(asection)
+    print("strip_section: ", asection)
     print(len(asection))
     for data in asection:
         print(data[10:])
@@ -206,7 +206,7 @@ def report_section(asection):
     Post: Returns verbal friendly information
     """
     section_text = ''
-    print(asection)
+    print("report_section: ", asection)
     if 'F' in asection:
         if (asection[1] == '1'):
             section_text = "Section " + asection + " 10 Week Class"
@@ -252,6 +252,6 @@ def get_daytime(classname):
     
     for x in range(total_len):
         new_daytime_tuple = (report_section(strip_section(section_tuple[x])), report_days(dayofweek_tuple[x]), report_time(begintime_tuple[x]), report_time(endtime_tuple[x]))
-        daytime_tuple.append(new_daytime_tuple)
+        daytime_tuple = daytime_tuple + new_daytime_tuple
 
     return(daytime_tuple)

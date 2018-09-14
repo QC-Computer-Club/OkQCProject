@@ -118,7 +118,7 @@ def main():
                         #combined_info = section_tuples[0] + ' ' + section_tuples[1] + ' ' + section_tuples[2] + ' ' + section_tuples[3] + ' '
                         combined_info = section_tuples + ' '
                         print(combined_info)
-                        texttosay = texttosay + combined_info
+                        texttosay = texttosay + ' ' + combined_info
                     print(texttosay)
                     aiy.audio.say(texttosay)
                 except:
