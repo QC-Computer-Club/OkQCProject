@@ -5,6 +5,10 @@
 import re
 import db_query
 
+# Main for testing purposes
+def main():
+    print(get_daytime("Introduction To Programming"))
+
 def lookup_prof_class(vtext):
     """
     Get classname from query before looking up professor
@@ -166,22 +170,24 @@ def report_days(aday):
     Saturday, Sunday (respectively)
     Post: Returns appropriate days based on listed letters
     """
-    aday = aday.Upper()
+    print("report_days: ", aday)
+    
     daysofweek = ''
-    if 'M' in aday:
-        daysofweek = daysofweek + "Monday" + ' '
-    elif 'T'in aday:
-        daysofweek = daysofweek + "Tuesday" + ' '
-    elif 'W'in aday:
-        daysofweek = daysofweek + "Wednesday" + ' '
-    elif 'R' in aday:
-        daysofweek = daysofweek + "Thursday" + ' '
-    elif 'F' in aday:
-        daysofweek = daysofweek + "Friday" + ' '
-    elif 'S' in aday:
-        daysofweek = daysofweek + "Saturday" + ' '
-    elif 'U' in aday:
-        daysofweek = daysofweek + "Sunday" + ' '
+    for day in aday:
+        if 'M' in day:
+            daysofweek = daysofweek + "Monday" + ' '
+        if 'T' in day:
+            daysofweek = daysofweek + "Tuesday" + ' '
+        if 'W' in day:
+            daysofweek = daysofweek + "Wednesday" + ' '
+        if 'R' in day:
+            daysofweek = daysofweek + "Thursday" + ' '
+        if 'F' in day:
+            daysofweek = daysofweek + "Friday" + ' '
+        if 'S' in day:
+            daysofweek = daysofweek + "Saturday" + ' '
+        if 'U' in day:
+            daysofweek = daysofweek + "Sunday" + ' '
     return(daysofweek)
 
 def strip_section(asection):
@@ -192,11 +198,9 @@ def strip_section(asection):
     Post: Returns strictly section number
     """
     print("strip_section: ", asection)
-    print(len(asection))
     for data in asection:
         print(data[10:])
-        return(asection[10:])
-    #return(asection[10:])
+        return(data[10:])
 
 def report_section(asection):
     """
@@ -255,3 +259,6 @@ def get_daytime(classname):
         daytime_tuple = daytime_tuple + new_daytime_tuple
 
     return(daytime_tuple)
+
+if __name__ == '__main__':
+    main()
