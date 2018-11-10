@@ -31,7 +31,7 @@ print(col_list)
 def main():
 
     # Read in User Input and set to Title case
-    subject = input("Which class are you inquiring about?: ").title()
+    subject = replace_roman_num(input("Which class are you inquiring about?: ")).title()
     predicate = input("What would you like to know?: ").title()
 
     # Created List of all Classes 
@@ -77,6 +77,8 @@ def main():
             print(result_tuple)
 
 def search(classname, query):
+    classname = replace_roman_num(classname)
+    
     # Class Name stored as User/Voice Input
     subject = classname.title()
     predicate = query.title()
@@ -167,6 +169,19 @@ def search(classname, query):
     
     return result_tuple_list
 
+def replace_roman_num(classname):
+    class_split = classname.split()
+    roman_dict = {
+        "one" : "I",
+        "two" : "II",
+        "three" : "III",
+        "four" : "IV"
+    }
+    
+    class_last = class_split[len(class_split)-1]
+    if class_last in roman_dict:
+        classname = classname.replace(class_last, roman_dict[class_last])
+    return classname
 
 if __name__ == '__main__':
     main()
