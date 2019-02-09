@@ -51,7 +51,7 @@ def get_classnuminfo(classinfo, numresult):
     # 1 -> course type designation ex: CSI
     # 2 -> course number ex: 116
     # 3 -> section number ex: 01
-    classnumresult = re.match(r"([A-Z][A-Z][A-Z])  ([0-9][0-9][0-9])  ([F0-9][0-9])", classinfo.upper())
+    classnumresult = re.match(r"(\D{3})  (\d{3})  ([F0-9][0-9])", classinfo.upper())
     print('get_classnuminfo:', classnumresult.group(numresult))
     return(classnumresult.group(numresult))
 
