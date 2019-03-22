@@ -46,83 +46,81 @@ def main():
         else:
             print('You said "', text, '"')
             if 'who' in text:
+                #try:
                 classname = parse_req.lookup_prof_class(text)
                 results = parse_req.lookup_prof(classname)
-                try:
-                    message = 'is being taught by professor'
-                    print(classname, message)
-                    texttosay = classname + ' ' + message
-                    #print('I am here')
-                    
-                    for names in results:
-                        print(names[0])
-                        texttosay = texttosay + ' ' + names[0]
+                message = 'is being taught by professor'
+                print(classname, message)
+                texttosay = classname + ' ' + message
+                #print('I am here')
+                for names in results:
+                    print(names[0])
+                    texttosay = texttosay + ' ' + names[0]
                     #print(texttosay)
-                    aiy.audio.say(texttosay)
-                except:
-                    print("Something went horribly wrong.")
+                aiy.audio.say(texttosay)
+                #except:
+                    #print("Something went horribly wrong.")
                     
             elif 'what' in text:
+                #try:
                 classnum = parse_req.get_classnum_class(text)
                 results = parse_req.get_classnum(classnum)
-                try:
-                    message = 'has a course number of'
-                    print(classnum, message)
-                    texttosay = classnum + ' ' + message + ' '
-                    #print('I am here')
-                    
-                    for names in results:
-                        print(names[0])
-                        textresult = parse_req.remove_classsectnum(names[0])
-                        print(textresult)
-                        #texttosay = texttosay + ' ' + textresult
-                        #trying to add spaces in the letters and numbers
-                        #so course letters like BUS would not be said literally
-                        for letter in textresult:
-                            texttosay = texttosay + letter + ' '
-                        print(texttosay)
-                        break
+                message = 'has a course number of'
+                print(classnum, message)
+                texttosay = classnum + ' ' + message + ' '
+                #print('I am here')
+                for names in results:
+                    print(names[0])
+                    textresult = parse_req.remove_classsectnum(names[0])
+                    print(textresult)
+                    #texttosay = texttosay + ' ' + textresult
+                    #trying to add spaces in the letters and numbers
+                    #so course letters like BUS would not be said literally
+                    for letter in textresult:
+                        texttosay = texttosay + letter + ' '
+                    print(texttosay)
+                    break
                     #print(texttosay)
-                    aiy.audio.say(texttosay)
-                except:
-                    print("Something went horribly wrong.")
+                aiy.audio.say(texttosay)
+                #except:
+                    #print("Something went horribly wrong.")
 
             elif 'where' in text:
+                #try:
                 classname = parse_req.get_roomnum_class(text)
                 results = parse_req.get_roomnum(classname)
-                try:
-                    message = 'is being held in'
-                    print(classname, message)
-                    texttosay = classname + ' ' + message
-                    #print('I am here')
+                message = 'is being held in'
+                print(classname, message)
+                texttosay = classname + ' ' + message
+                #print('I am here')
                     
-                    for names in results:
-                        print(names[0])
-                        roomnum_text = parse_req.fix_roomnumtext(names[0])
-                        texttosay = texttosay + ' ' + roomnum_text
-                    print(texttosay)
-                    aiy.audio.say(texttosay)
-                except:
-                    print("Something went horribly wrong.")
+                for names in results:
+                    print(names[0])
+                    roomnum_text = parse_req.fix_roomnumtext(names[0])
+                    texttosay = texttosay + ' ' + roomnum_text
+                print(texttosay)
+                aiy.audio.say(texttosay)
+                #except:
+                    #print("Something went horribly wrong.")
 
             elif 'when' in text:
+                #try:
                 classname = parse_req.get_daytime_class(text)
                 results = parse_req.get_daytime(classname)
-                try:
-                    message = 'is being run in'
-                    print(classname, message)
-                    texttosay = classname + ' ' + message
-                    #print('I am here')
+                message = 'is being run in'
+                print(classname, message)
+                texttosay = classname + ' ' + message
+                #print('I am here')
                     
-                    for section_tuples in results:
-                        #combined_info = section_tuples[0] + ' ' + section_tuples[1] + ' ' + section_tuples[2] + ' ' + section_tuples[3] + ' '
-                        combined_info = section_tuples + ' '
-                        print(combined_info)
-                        texttosay = texttosay + ' ' + combined_info
-                    print(texttosay)
-                    aiy.audio.say(texttosay)
-                except:
-                    print("Something went horribly wrong.")
+                for section_tuples in results:
+                    #combined_info = section_tuples[0] + ' ' + section_tuples[1] + ' ' + section_tuples[2] + ' ' + section_tuples[3] + ' '
+                    combined_info = section_tuples + ' '
+                    print(combined_info)
+                    texttosay = texttosay + ' ' + combined_info
+                print(texttosay)
+                aiy.audio.say(texttosay)
+                #except:
+                    #print("Something went horribly wrong.")
 
             #if 'turn on the light' in text:
             #    led.set_state(aiy.voicehat.LED.ON)
